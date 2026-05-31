@@ -10,7 +10,7 @@ async function main() {
     { id: "alimentos", nome: "Alimentos", icone: "fast-food-outline", cor: "#059669" },
     { id: "limpeza", nome: "Limpeza", icone: "sparkles-outline", cor: "#0284c7" },
     { id: "papelaria", nome: "Papelaria", icone: "document-outline", cor: "#db2777" },
-    { id: "escritorio", nome: "Escritorio", icone: "briefcase-outline", cor: "#d97706" }
+    { id: "escritorio", nome: "Escritorio", icone: "briefcase-outline", cor: "#d97706" },
   ];
 
   for (const categoria of categorias) {
@@ -18,6 +18,47 @@ async function main() {
       where: { id: categoria.id },
       update: categoria,
       create: categoria,
+    });
+  }
+
+  const produtos = [
+    {
+      id: "prod_cafe",
+      nome: "Cafe Especial 250g",
+      categoriaId: "bebidas",
+      quantidade: 4,
+      quantidadeMinima: 10,
+      preco: 32.9,
+      unidade: "un",
+      observacao: "Pacote premium para vendas unitarias.",
+    },
+    {
+      id: "prod_arroz",
+      nome: "Arroz Branco 5kg",
+      categoriaId: "alimentos",
+      quantidade: 15,
+      quantidadeMinima: 6,
+      preco: 29.9,
+      unidade: "cx",
+      observacao: null,
+    },
+    {
+      id: "prod_sulfite",
+      nome: "Papel Sulfite A4",
+      categoriaId: "escritorio",
+      quantidade: 22,
+      quantidadeMinima: 8,
+      preco: 34.9,
+      unidade: "pct",
+      observacao: null,
+    },
+  ];
+
+  for (const produto of produtos) {
+    await prisma.produto.upsert({
+      where: { id: produto.id },
+      update: produto,
+      create: produto,
     });
   }
 

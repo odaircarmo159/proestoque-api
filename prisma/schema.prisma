@@ -19,7 +19,7 @@ model Categoria {
 }
 
 model Produto {
-  id               String    @id @default(cuid())
+  id               String         @id @default(cuid())
   nome             String
   categoriaId      String
   quantidade       Int
@@ -27,9 +27,10 @@ model Produto {
   preco            Float
   unidade          String
   observacao       String?
-  criadoEm         DateTime  @default(now())
-  atualizadoEm     DateTime  @updatedAt
-  categoria        Categoria @relation(fields: [categoriaId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  criadoEm         DateTime       @default(now())
+  atualizadoEm     DateTime       @updatedAt
+  categoria        Categoria      @relation(fields: [categoriaId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  movimentacoes    Movimentacao[]
 
   @@map("produtos")
 }
@@ -43,4 +44,16 @@ model Usuario {
   atualizadoEm DateTime @updatedAt
 
   @@map("usuarios")
+}
+
+model Movimentacao {
+  id         String   @id @default(cuid())
+  produtoId  String
+  tipo       String
+  quantidade Int
+  observacao String?
+  criadoEm   DateTime @default(now())
+  produto    Produto  @relation(fields: [produtoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("movimentacoes")
 }

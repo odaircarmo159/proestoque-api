@@ -1,10 +1,12 @@
 import { Router } from "express";
 
 import { ProdutoController } from "../controllers/produto.controller";
+import { autenticar } from "../middlewares/auth";
 
 const produtoRouter = Router();
 const controller = new ProdutoController();
 
+produtoRouter.use(autenticar);
 produtoRouter.get("/", controller.listar.bind(controller));
 produtoRouter.get("/:id", controller.buscarPorId.bind(controller));
 produtoRouter.post("/", controller.criar.bind(controller));
